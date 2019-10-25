@@ -3,10 +3,11 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class TravelerController
+class TravelerController extends AbstractController
 {
   public function index(Environment $twig)
   {

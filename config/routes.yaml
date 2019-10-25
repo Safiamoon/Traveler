@@ -1,5 +1,5 @@
 # config/routes.yaml
 
 welcome_to_traveler:
-    path:       /traveler/home
+    path:       /
     controller: App\Controller\TravelerController::index
