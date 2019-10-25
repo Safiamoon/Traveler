@@ -34,6 +34,11 @@ class Photo
      */
     private $destination;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $legende;
+
     public function __construct()
     {
         $this->Voyage = new ArrayCollection();
@@ -95,6 +100,18 @@ class Photo
     public function setDestination(?Destination $destination): self
     {
         $this->destination = $destination;
+
+        return $this;
+    }
+
+    public function getLegende(): ?string
+    {
+        return $this->legende;
+    }
+
+    public function setLegende(?string $legende): self
+    {
+        $this->legende = $legende;
 
         return $this;
     }
