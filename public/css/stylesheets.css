@@ -1,0 +1,16 @@
+
+.title
+{
+    color: rosybrown;
+    margin-top : 10em;
+    margin-left:15%;
+    animation-fill-mode:forwards
+}
+.h1
+{
+    font-size:6em;
+    text-transform:uppercase;
+    animation-duration :1s;
+    animation-delay:0.5s;
+}
+ 

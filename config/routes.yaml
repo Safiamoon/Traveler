@@ -1,5 +1,11 @@
 # config/routes.yaml
 
-welcome_to_traveler:
-    path:       /
-    controller: App\Controller\TravelerController::index
+# welcome_to_traveler:
+#     path:       /
+#     controller: App\Controller\TravelerController::index
+
+admin :  
+    resource: ../src/Controller/Admin
+    name_prefix: admin_
+    prefix: /admin
+    type: annotation
