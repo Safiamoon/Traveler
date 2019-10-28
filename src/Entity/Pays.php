@@ -21,11 +21,6 @@ class Pays
      */
     private $nom;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $Date;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -39,18 +34,6 @@ class Pays
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->Date;
-    }
-
-    public function setDate(\DateTimeInterface $Date): self
-    {
-        $this->Date = $Date;
 
         return $this;
     }

@@ -1,18 +1,21 @@
  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand" href="/">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Voyages<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{path('admin_voyage_index')}}">Voyages</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Destination</a>
+        <a class="nav-link" href="{{path('admin_destination_index')}}">Destination</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Photo</a>
+       <li class="nav-item active">
+        <a class="nav-link" href="{{path('app_login')}}">login</a>
+      </li>
+        <li class="nav-item active">
+        <a class="nav-link" href="{{path('app_logout')}}">logout</a>
       </li>
     </ul>
     <span class="navbar-text">
