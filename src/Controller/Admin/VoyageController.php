@@ -20,7 +20,7 @@ class VoyageController extends AbstractController
      */
     public function index(VoyageRepository $voyageRepository): Response
     {
-        return $this->render('voyage/index.html.twig', [
+        return $this->render('admin/voyage/index.html.twig', [
             'voyages' => $voyageRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class VoyageController extends AbstractController
             return $this->redirectToRoute('voyage_index');
         }
 
-        return $this->render('voyage/new.html.twig', [
+        return $this->render('admin/voyage/new.html.twig', [
             'voyage' => $voyage,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class VoyageController extends AbstractController
      */
     public function show(Voyage $voyage): Response
     {
-        return $this->render('voyage/show.html.twig', [
+        return $this->render('admin/voyage/show.html.twig', [
             'voyage' => $voyage,
         ]);
     }
@@ -72,7 +72,7 @@ class VoyageController extends AbstractController
             return $this->redirectToRoute('voyage_index');
         }
 
-        return $this->render('voyage/edit.html.twig', [
+        return $this->render('admin/voyage/edit.html.twig', [
             'voyage' => $voyage,
             'form' => $form->createView(),
         ]);
