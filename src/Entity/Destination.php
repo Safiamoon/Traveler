@@ -47,10 +47,6 @@ class Destination
      */
     private $Voyage_Destination;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="destination")
-     */
-    private $destination_photo;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Pays", inversedBy="destinations")
@@ -153,37 +149,6 @@ class Destination
             // set the owning side to null (unless already changed)
             if ($voyageDestination->getDestination() === $this) {
                 $voyageDestination->setDestination(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Photo[]
-     */
-    public function getDestinationPhoto(): Collection
-    {
-        return $this->destination_photo;
-    }
-
-    public function addDestinationPhoto(Photo $destinationPhoto): self
-    {
-        if (!$this->destination_photo->contains($destinationPhoto)) {
-            $this->destination_photo[] = $destinationPhoto;
-            $destinationPhoto->setDestination($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDestinationPhoto(Photo $destinationPhoto): self
-    {
-        if ($this->destination_photo->contains($destinationPhoto)) {
-            $this->destination_photo->removeElement($destinationPhoto);
-            // set the owning side to null (unless already changed)
-            if ($destinationPhoto->getDestination() === $this) {
-                $destinationPhoto->setDestination(null);
             }
         }
 

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,12 +30,6 @@ class Voyage
     private $Destination;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Photo", inversedBy="Voyage")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $photo;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $note;
@@ -47,6 +43,17 @@ class Voyage
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="voyage", orphanRemoval=true)
+     */
+    private $photos;
+
+    public function __construct()
+    {
+        $this->photo = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -73,18 +80,6 @@ class Voyage
     public function setDestination(?Destination $Destination): self
     {
         $this->Destination = $Destination;
-
-        return $this;
-    }
-
-    public function getPhoto(): ?Photo
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(?Photo $photo): self
-    {
-        $this->photo = $photo;
 
         return $this;
     }
@@ -123,5 +118,44 @@ class Voyage
         $this->titre = $titre;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|photo[]
+     */
+    public function getPhoto(): Collection
+    {
+        return $this->photo;
+    }
+
+    public function addPhoto(photo $photo): self
+    {
+        if (!$this->photo->contains($photo)) {
+            $this->photo[] = $photo;
+            $photo->setVoyage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(photo $photo): self
+    {
+        if ($this->photo->contains($photo)) {
+            $this->photo->removeElement($photo);
+            // set the owning side to null (unless already changed)
+            if ($photo->getVoyage() === $this) {
+                $photo->setVoyage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Photo[]
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
     }
 }

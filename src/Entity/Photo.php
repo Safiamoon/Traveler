@@ -17,27 +17,31 @@ class Photo
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $DatePhoto;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Voyage", mappedBy="photo")
-     */
-    private $Voyage;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Destination", inversedBy="destination_photo")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $destination;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $legende;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Voyage", inversedBy="photos")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $voyage;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $DatePhoto;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filePath;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nom;
 
     public function __construct()
     {
@@ -49,61 +53,6 @@ class Photo
         return $this->id;
     }
 
-    public function getDatePhoto(): ?\DateTimeInterface
-    {
-        return $this->DatePhoto;
-    }
-
-    public function setDatePhoto(\DateTimeInterface $DatePhoto): self
-    {
-        $this->DatePhoto = $DatePhoto;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Voyage[]
-     */
-    public function getVoyage(): Collection
-    {
-        return $this->Voyage;
-    }
-
-    public function addVoyage(Voyage $voyage): self
-    {
-        if (!$this->Voyage->contains($voyage)) {
-            $this->Voyage[] = $voyage;
-            $voyage->setPhoto($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVoyage(Voyage $voyage): self
-    {
-        if ($this->Voyage->contains($voyage)) {
-            $this->Voyage->removeElement($voyage);
-            // set the owning side to null (unless already changed)
-            if ($voyage->getPhoto() === $this) {
-                $voyage->setPhoto(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getDestination(): ?Destination
-    {
-        return $this->destination;
-    }
-
-    public function setDestination(?Destination $destination): self
-    {
-        $this->destination = $destination;
-
-        return $this;
-    }
-
     public function getLegende(): ?string
     {
         return $this->legende;
@@ -112,6 +61,54 @@ class Photo
     public function setLegende(?string $legende): self
     {
         $this->legende = $legende;
+
+        return $this;
+    }
+
+    public function getVoyage(): ?Voyage
+    {
+        return $this->voyage;
+    }
+
+    public function setVoyage(?Voyage $voyage): self
+    {
+        $this->voyage = $voyage;
+
+        return $this;
+    }
+
+    public function getDatePhoto(): ?\DateTimeInterface
+    {
+        return $this->DatePhoto;
+    }
+
+    public function setDatePhoto(?\DateTimeInterface $DatePhoto): self
+    {
+        $this->DatePhoto = $DatePhoto;
+
+        return $this;
+    }
+
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): self
+    {
+        $this->filePath = $filePath;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }

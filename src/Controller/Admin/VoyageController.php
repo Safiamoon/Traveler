@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+
+use App\Entity\Photo;
 use App\Entity\Voyage;
 use App\Form\VoyageType;
 use App\Repository\VoyageRepository;
@@ -33,9 +35,29 @@ class VoyageController extends AbstractController
         $voyage = new Voyage();
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
-
+       
+         
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $uploadedFile = $form['photoFile']->getData();
+            if($uploadedFile){
+                $entityManager = $this->getDoctrine()->getManager();
+                
+                foreach($uploadedFile as $upload){
+                    $photo = new Photo();
+                    $destination = $this->getParameter('kernel.project_dir').'/public/uploads/photos';
+                    $originalFilename = pathinfo($upload->getClientOriginalName(),PATHINFO_FILENAME);
+                    $newFilename = $originalFilename.'-'.uniqid().'.'.$upload->guessExtension();
+        
+                    $upload->move(
+                        $destination,
+                        $newFilename
+                    );
+                    // $photo->setNom($voyage->getNom);
+                    $photo->setFilePath($newFilename);
+                    $photo->setVoyage($voyage);
+                    $entityManager->persist($photo);
+                }
+            }
             $entityManager->persist($voyage);
             $entityManager->flush();
 
@@ -47,7 +69,6 @@ class VoyageController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="voyage_show", methods={"GET"})
      */
@@ -67,21 +88,8 @@ class VoyageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**@var UploaderFile $uploadedFile*/
-            $uploadedFile = $form['photoFile']->getData();
-            if($uploadedFile){
-            $destination = $this->getParameter('kernel.project_dir').'/public/uploads/voyage_image';
+           
             $this->getDoctrine()->getManager()->flush();
-
-            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(),PATHINFO_FILENAME);
-            $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
-
-            $uploadedFile->move(
-                $destination,
-                $newFilename
-            );
-            $voyage->setImageFilename($newFilename);
-             }
 
             return $this->redirectToRoute('admin_voyage_index');
         }

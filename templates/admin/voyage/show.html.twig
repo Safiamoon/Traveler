@@ -27,6 +27,16 @@
                 <th>Titre</th>
                 <td>{{ voyage.titre }}</td>
             </tr>
+
+            <tr>
+                <th>Photos</th>
+                <td> 
+                {% for photo in voyage.photos  %}
+                 <img src = '/uploads/photos/{{photo.filePath}}'>
+                {% endfor %}
+                </td>
+            </tr>
+
         </tbody>
     </table>
 
