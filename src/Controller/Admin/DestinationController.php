@@ -39,7 +39,7 @@ class DestinationController extends AbstractController
             $entityManager->persist($destination);
             $entityManager->flush();
 
-            return $this->   redirectToRoute('admin_admin_admin_destination_index');
+            return $this-> redirectToRoute('admin_destination_index');
         }
 
         return $this->render('admin/destination/new.html.twig', [

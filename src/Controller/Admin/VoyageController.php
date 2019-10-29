@@ -67,9 +67,23 @@ class VoyageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**@var UploaderFile $uploadedFile*/
+            $uploadedFile = $form['photoFile']->getData();
+            if($uploadedFile){
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads/voyage_image';
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->   redirectToRoute('admin_admin_admin_voyage_index');
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(),PATHINFO_FILENAME);
+            $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+
+            $uploadedFile->move(
+                $destination,
+                $newFilename
+            );
+            $voyage->setImageFilename($newFilename);
+             }
+
+            return $this->redirectToRoute('admin_voyage_index');
         }
 
         return $this->render('admin/voyage/edit.html.twig', [

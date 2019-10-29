@@ -22,12 +22,6 @@ class Destination
      * @ORM\Column(type="string", length=255)
      */
     private $Ville;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $Pays;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -58,6 +52,12 @@ class Destination
      */
     private $destination_photo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Pays", inversedBy="destinations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Pays;
+
     public function __construct()
     {
         $this->Voyage_Destination = new ArrayCollection();
@@ -80,19 +80,6 @@ class Destination
 
         return $this;
     }
-
-    public function getPays(): ?string
-    {
-        return $this->Pays;
-    }
-
-    public function setPays(string $Pays): self
-    {
-        $this->Pays = $Pays;
-
-        return $this;
-    }
-
     public function getLatitude(): ?string
     {
         return $this->Latitude;
@@ -199,6 +186,18 @@ class Destination
                 $destinationPhoto->setDestination(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPays(): ?Pays
+    {
+        return $this->Pays;
+    }
+
+    public function setPays(?Pays $Pays): self
+    {
+        $this->Pays = $Pays;
 
         return $this;
     }
