@@ -75,6 +75,7 @@ class UserController extends AbstractController
         return $this->render('admin/user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'editMode' => $user -> getId() !== null
         ]);
     }
 

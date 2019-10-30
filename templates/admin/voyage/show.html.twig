@@ -32,7 +32,7 @@
                 <th>Photos</th>
                 <td> 
                 {% for photo in voyage.photos  %}
-                 <img src = '/uploads/photos/{{photo.filePath}}'>
+                  <img src="{{ (voyage_photo_public_path ~ '/' ~ photo.filePath) | imagine_filter('voyage_thumb') }}" title="Photo du voyage" />
                 {% endfor %}
                 </td>
             </tr>

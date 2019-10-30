@@ -9,3 +9,7 @@ admin :
     name_prefix: admin_
     prefix: /admin
     type: annotation
+
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
