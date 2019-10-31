@@ -1,16 +1,22 @@
 
 .title
 {
-    color: rosybrown;
-    margin-top : 10em;
-    margin-left:15%;
+    color:darkcyan;
+    margin-top :10em;
+    margin-left:20%;
+    margin-right:20%;
     animation-fill-mode:forwards
 }
 .h1
 {
-    font-size:6em;
+    font-size:10em;
     text-transform:uppercase;
     animation-duration :1s;
     animation-delay:0.5s;
 }
+.sous-titre
+{
+    color: black;
+}
+
  

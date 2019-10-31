@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Destination;
 use App\Form\DestinationType;
+use App\Geocoding\IGeocoding;
 use App\Repository\DestinationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,14 +29,21 @@ class DestinationController extends AbstractController
     /**
      * @Route("/new", name="destination_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, IGeocoding $geocodingService): Response
     {
         $destination = new Destination();
         $form = $this->createForm(DestinationType::class, $destination);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $location = $destination->getVille() . ', ' . $destination->getPays()->getNom();
+            $geoData = $geocodingService->geocode($location);
+
             $entityManager = $this->getDoctrine()->getManager();
+            if (!empty($geoData)) {
+                $destination->setLatitude($geoData[0]['lat']);
+                $destination->setIng($geoData[0]['lon']);
+            }
             $entityManager->persist($destination);
             $entityManager->flush();
 
@@ -83,7 +91,7 @@ class DestinationController extends AbstractController
      */
     public function delete(Request $request, Destination $destination): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$destination->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $destination->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($destination);
             $entityManager->flush();

@@ -3,29 +3,17 @@
 {% block title %}Destination{% endblock %}
 
 {% block body %}
-    <h1>Destination</h1>
+    <h1>Destination<span class="badge badge-info">{{ destination.latitude }} / {{ destination.Ing }}</span></h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ destination.id }}</td>
-            </tr>
             <tr>
                 <th>Ville</th>
                 <td>{{ destination.Ville }}</td>
             </tr>
             <tr>
                 <th>Pays</th>
-                <td>{{ destination.Pays }}</td>
-            </tr>
-            <tr>
-                <th>Latitude</th>
-                <td>{{ destination.Latitude }}</td>
-            </tr>
-            <tr>
-                <th>Ing</th>
-                <td>{{ destination.Ing }}</td>
+                <td>{{ destination.Pays.nom }}</td>
             </tr>
             <tr>
                 <th>DateCreation</th>
